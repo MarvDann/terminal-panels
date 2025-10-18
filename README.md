@@ -1,6 +1,6 @@
 # Terminal Panels
 
-Beautiful terminal panels with colored rounded borders, inspired by Python's rich.console package.
+Beautiful terminal panels with colored rounded borders, inspired by Python's rich.console package and leveraging the great work by Sindre Sorhus' boxen package.
 
 [![npm version](https://img.shields.io/npm/v/terminal-panels.svg)](https://www.npmjs.com/package/terminal-panels)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
