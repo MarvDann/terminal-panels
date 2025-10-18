@@ -1,0 +1,57 @@
+{
+  "name": "terminal-panels",
+  "version": "1.0.0",
+  "description": "Beautiful terminal panels with colored borders, inspired by Python's rich.console",
+  "type": "module",
+  "main": "./dist/panel.js",
+  "module": "./dist/panel.js",
+  "types": "./dist/panel.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/panel.js",
+      "types": "./dist/panel.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "examples": "bun run examples.ts"
+  },
+  "keywords": [
+    "terminal",
+    "cli",
+    "panel",
+    "box",
+    "border",
+    "colored",
+    "rich",
+    "console",
+    "output",
+    "formatting",
+    "chalk",
+    "boxen"
+  ],
+  "author": "Martin Dann",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "dependencies": {
+    "boxen": "^8.0.1",
+    "chalk": "^5.6.2",
+    "string-width": "^8.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.18.11",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
