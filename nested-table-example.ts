@@ -21,12 +21,12 @@ Panel({
   padding: 1
 });
 
-// Example 2: Full-width table in a panel
-console.log('\nExample 2: Full-width table in a Panel');
+// Example 2: Table with fullWidth in a panel (grows naturally)
+console.log('\nExample 2: Table with fullWidth in a Panel');
 const table2 = new Table({
   borderStyle: 'rounded',
   borderColor: 'green',
-  fullWidth: true  // This makes the table expand to fill available width
+  fullWidth: true  // Allows natural growth - works well in nested contexts
 });
 table2
   .addColumn('Name')
@@ -69,12 +69,12 @@ Panel({
 });
 
 // Example 4: Error log table with fullWidth in error panel
-console.log('\nExample 4: Error Log Table with Full Width');
+console.log('\nExample 4: Error Log Table with fullWidth');
 const errorTable = new Table({
   borderStyle: 'single',
   borderColor: 'red',
   showRowSeparator: true,
-  fullWidth: true  // Expands to fill the panel width
+  fullWidth: true  // Grows naturally - perfect for nested tables
 });
 errorTable
   .addColumn('Time', { minWidth: 10 })
@@ -92,9 +92,9 @@ Panel({
   borderStyle: 'bold'
 });
 
-// Example 5: Comparison of regular vs fullWidth tables
-console.log('\nExample 5: Regular Table vs Full Width Table');
-console.log('\nRegular table (normal width):');
+// Example 5: Comparison of regular vs expand tables
+console.log('\nExample 5: Regular Table vs Expanded Table');
+console.log('\nRegular table (natural width):');
 const regularTable = new Table({
   title: 'Regular Width',
   borderStyle: 'single',
@@ -109,20 +109,20 @@ regularTable
   .addRow('3', 'Charlie', 'Inactive');
 regularTable.print();
 
-console.log('\nFull width table (expands to terminal width):');
-const fullWidthTable = new Table({
-  title: 'Full Width (Expanded)',
+console.log('\nExpanded table (forces terminal width):');
+const expandedTable = new Table({
+  title: 'Expanded to Terminal Width',
   borderStyle: 'single',
   borderColor: 'green',
-  fullWidth: true
+  expand: true  // Forces terminal width expansion
 });
-fullWidthTable
+expandedTable
   .addColumn('ID')
   .addColumn('Name')
   .addColumn('Status', { align: 'center' })
   .addRow('1', 'Alice', 'Active')
   .addRow('2', 'Bob', 'Active')
   .addRow('3', 'Charlie', 'Inactive');
-fullWidthTable.print();
+expandedTable.print();
 
 console.log('\n=== End of Examples ===\n');

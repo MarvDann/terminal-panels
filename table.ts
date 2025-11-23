@@ -273,7 +273,7 @@ export class Table {
     });
 
     // Handle table width options
-    if (this.options.width || this.options.expand || this.options.fullWidth) {
+    if (this.options.width || this.options.expand) {
       const padding = this.options.padding || 0;
       const separatorWidth = this.columns.length + 1; // vertical borders
       const paddingWidth = (padding * 2) * this.columns.length;
@@ -283,8 +283,8 @@ export class Table {
 
       if (this.options.width) {
         targetWidth = this.options.width;
-      } else if (this.options.fullWidth || this.options.expand) {
-        // For fullWidth/expand, use terminal width
+      } else if (this.options.expand) {
+        // For expand, use terminal width
         try {
           targetWidth = process.stdout.columns || currentWidth;
         } catch {
@@ -302,6 +302,9 @@ export class Table {
         });
       }
     }
+
+    // Note: fullWidth option is kept for backward compatibility but doesn't force width
+    // It allows the table to grow naturally to fit content, which works well when nested in panels
 
     return widths;
   }

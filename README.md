@@ -293,10 +293,11 @@ new Table(options?: TableOptions)
   - Default: `1`
 - `showRowSeparator` (boolean, optional): Whether to show separators between rows
   - Default: `false`
-- `expand` (boolean, optional): Expand table to full terminal width
+- `expand` (boolean, optional): Expand table to full terminal width (forces terminal width)
   - Default: `false`
 - `width` (number, optional): Fixed width for the table
-- `fullWidth` (boolean, optional): Make table take full width of parent container (useful for nesting in panels)
+- `fullWidth` (boolean, optional): Allows table to grow naturally to fit content (useful for nesting in panels)
+  - Note: Unlike `expand`, this doesn't force terminal width, making it safe for nested tables
   - Default: `false`
 
 #### ColumnOptions
@@ -362,8 +363,9 @@ See the [nested-table-example.ts](./nested-table-example.ts) file for examples o
 - 📝 Table titles
 - ⚙️ Configurable padding
 - 💡 Simple helper function for quick tables
-- 🔗 **Nestable in panels** - Tables can be nested within panels
-- 📐 fullWidth option for parent container adaptation
+- 🔗 **Nestable in panels** - Tables work perfectly when nested within panels
+- 📐 fullWidth option for natural growth (safe for nesting)
+- 🖥️ expand option for forcing terminal width expansion
 - ✨ Similar to Python's rich.console Table
 
 ### General
