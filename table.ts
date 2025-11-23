@@ -422,8 +422,29 @@ export class Table {
 
     // Header row
     if (this.options.showHeader) {
-      const headers = this.columns.map(col => col.header);
-      lines.push(this.renderRow(headers, columnWidths, true));
+      const borderColor = this.getChalkColor(this.options.borderColor);
+      const headerWidth = this.calculateTotalInnerWidth(columnWidths);
+
+      // Create header text by joining column headers with spaces
+      const plainHeaderText = this.columns.map(col => col.header).join('   ');
+      const visibleWidth = stringWidth(plainHeaderText);
+
+      // Calculate padding for centering
+      const padding = Math.max(0, headerWidth - visibleWidth);
+      const leftPad = Math.floor(padding / 2);
+      const rightPad = padding - leftPad;
+
+      // Apply colors to individual headers
+      const coloredHeaders = this.columns.map(col => {
+        const headerColor = col.headerColor ? this.getChalkColor(col.headerColor) : chalk;
+        return headerColor(col.header);
+      });
+
+      // Build centered header with colors
+      const centeredHeader = ' '.repeat(leftPad) + coloredHeaders.join('   ') + ' '.repeat(rightPad);
+
+      // Render header with solid borders (like title)
+      lines.push(borderColor(borderStyle.vertical) + centeredHeader + borderColor(borderStyle.vertical));
 
       // Header separator
       lines.push(this.renderLine(

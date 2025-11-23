@@ -178,13 +178,15 @@ table.print();
 Output:
 ```
 ┌─────────┬─────┬──────────┐
-│ Name    │ Age │ City     │
+│    Name   Age   City     │
 ├─────────┼─────┼──────────┤
 │ Alice   │ 30  │ New York │
 │ Bob     │ 25  │ London   │
 │ Charlie │ 35  │ Tokyo    │
 └─────────┴─────┴──────────┘
 ```
+
+Note: Headers are rendered with solid borders (not divided by columns) and centrally aligned for a cleaner appearance.
 
 ### Table with Title and Colors
 
