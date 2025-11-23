@@ -1,7 +1,7 @@
 {
   "name": "terminal-panels",
   "version": "1.0.0",
-  "description": "Beautiful terminal panels with colored borders, inspired by Python's rich.console",
+  "description": "Beautiful terminal panels and tables with colored borders, inspired by Python's rich.console",
   "type": "module",
   "main": "./dist/panel.js",
   "module": "./dist/panel.js",
@@ -10,6 +10,10 @@
     ".": {
       "import": "./dist/panel.js",
       "types": "./dist/panel.d.ts"
+    },
+    "./table": {
+      "import": "./dist/table.js",
+      "types": "./dist/table.d.ts"
     }
   },
   "files": [
@@ -20,12 +24,16 @@
   "scripts": {
     "build": "tsc",
     "prepublishOnly": "npm run build",
-    "examples": "bun run examples.ts"
+    "examples": "bun run examples.ts",
+    "examples:table": "bun run table-examples.ts",
+    "examples:nested": "bun run nested-table-example.ts",
+    "examples:width": "bun run table-width-examples.ts"
   },
   "keywords": [
     "terminal",
     "cli",
     "panel",
+    "table",
     "box",
     "border",
     "colored",
