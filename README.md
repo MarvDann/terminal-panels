@@ -1,6 +1,6 @@
 # Terminal Panels
 
-Beautiful terminal panels with colored rounded borders, inspired by Python's rich.console package and leveraging the great work by Sindre Sorhus' boxen package.
+Beautiful terminal panels and tables with colored borders, inspired by Python's rich.console package. Panels leverage the great work by Sindre Sorhus' boxen package.
 
 [![npm version](https://img.shields.io/npm/v/terminal-panels.svg)](https://www.npmjs.com/package/terminal-panels)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -150,10 +150,172 @@ Creates and displays a formatted panel in the terminal.
 
 ## Examples
 
-See the [examples.ts](./examples.ts) file for more detailed examples.
+See the [examples.ts](./examples.ts) file for more detailed panel examples.
+
+---
+
+## Tables
+
+Terminal Panels also includes a powerful `Table` module for creating beautiful tables in the terminal, similar to Python's rich.console Table.
+
+### Quick Start
+
+```typescript
+import { Table } from 'terminal-panels/table';
+
+const table = new Table();
+table
+  .addColumn('Name')
+  .addColumn('Age')
+  .addColumn('City')
+  .addRow('Alice', '30', 'New York')
+  .addRow('Bob', '25', 'London')
+  .addRow('Charlie', '35', 'Tokyo');
+
+table.print();
+```
+
+Output:
+```
+┌─────────┬─────┬──────────┐
+│ Name    │ Age │ City     │
+├─────────┼─────┼──────────┤
+│ Alice   │ 30  │ New York │
+│ Bob     │ 25  │ London   │
+│ Charlie │ 35  │ Tokyo    │
+└─────────┴─────┴──────────┘
+```
+
+### Table with Title and Colors
+
+```typescript
+import { Table } from 'terminal-panels/table';
+import chalk from 'chalk';
+
+const table = new Table({
+  title: 'User Status',
+  titleColor: chalk.bold.cyan,
+  borderColor: 'cyan',
+  borderStyle: 'rounded'
+});
+
+table
+  .addColumn('Name', { headerColor: 'yellow' })
+  .addColumn('Status', { headerColor: 'yellow', align: 'center' })
+  .addColumn('Score', { headerColor: 'yellow', align: 'right' })
+  .addRow('Alice', { text: 'Active', color: 'green' }, '95')
+  .addRow('Bob', { text: 'Inactive', color: 'red' }, '72')
+  .addRow('Charlie', { text: 'Active', color: 'green' }, '88');
+
+table.print();
+```
+
+### Helper Function
+
+```typescript
+import { createTable } from 'terminal-panels/table';
+
+const table = createTable(
+  ['Language', 'Year', 'Paradigm'],
+  [
+    ['JavaScript', '1995', 'Multi-paradigm'],
+    ['Python', '1991', 'Multi-paradigm'],
+    ['Rust', '2010', 'Multi-paradigm']
+  ],
+  { borderStyle: 'double', borderColor: 'magenta' }
+);
+
+console.log(table);
+```
+
+## Table API
+
+### `Table` Class
+
+#### Constructor
+
+```typescript
+new Table(options?: TableOptions)
+```
+
+#### Methods
+
+- `addColumn(header: string, options?: ColumnOptions): this`
+  - Adds a column to the table
+  - Returns `this` for method chaining
+
+- `addRow(...cells: Cell[]): this`
+  - Adds a row of data to the table
+  - Each cell can be a string or `{ text: string, color?: string | ChalkInstance }`
+  - Returns `this` for method chaining
+
+- `render(): string`
+  - Renders the table and returns it as a string
+
+- `print(): void`
+  - Renders and prints the table to console
+
+#### TableOptions
+
+- `title` (string, optional): Table title displayed at the top
+- `titleColor` (string | ChalkInstance, optional): Color for the title
+- `borderStyle` (BorderStyle, optional): Border style
+  - Options: `'single'`, `'double'`, `'rounded'`, `'bold'`, `'heavy'`, `'ascii'`, `'none'`
+  - Default: `'single'`
+- `borderColor` (string | ChalkInstance, optional): Color for borders
+- `showHeader` (boolean, optional): Whether to show the header row
+  - Default: `true`
+- `padding` (number, optional): Padding inside cells (left and right)
+  - Default: `1`
+- `showRowSeparator` (boolean, optional): Whether to show separators between rows
+  - Default: `false`
+- `expand` (boolean, optional): Expand table to full width
+  - Default: `false`
+- `width` (number, optional): Fixed width for the table
+
+#### ColumnOptions
+
+- `align` (ColumnAlign, optional): Column alignment
+  - Options: `'left'`, `'center'`, `'right'`
+  - Default: `'left'`
+- `minWidth` (number, optional): Minimum column width
+- `maxWidth` (number, optional): Maximum column width
+- `headerColor` (string | ChalkInstance, optional): Color for column header
+- `columnColor` (string | ChalkInstance, optional): Default color for cells in this column
+
+#### Cell Type
+
+```typescript
+type Cell = string | { text: string; color?: string | ChalkInstance }
+```
+
+### `createTable` Helper Function
+
+```typescript
+createTable(
+  columns: (string | Column)[],
+  rows: Cell[][],
+  options?: TableOptions
+): string
+```
+
+Convenience function to create and render a table in one call.
+
+## Table Examples
+
+See the [table-examples.ts](./table-examples.ts) file for more detailed table examples including:
+- Basic tables
+- Tables with titles and colors
+- Different border styles
+- Column alignment
+- Row separators
+- Server status dashboards
+- Color variations (hex, RGB, named)
+- Column width constraints
 
 ## Features
 
+### Panels
 - 🎯 **Panel types** - Quick status panels with `type` parameter (info, success, warning, error)
 - 🎨 Colored borders (named colors, hex, RGB)
 - 📦 Rounded and various border styles
@@ -161,6 +323,20 @@ See the [examples.ts](./examples.ts) file for more detailed examples.
 - ⚙️ Configurable padding and margins
 - 📏 Full-width panels by default
 - 🔤 Text alignment options (left, center, right)
+
+### Tables
+- 📊 **Rich tables** - Format data in beautiful terminal tables
+- 🎨 Colored borders, headers, and cells (named colors, hex, RGB)
+- 📦 Multiple border styles (single, double, rounded, bold, ascii, none)
+- 📐 Column alignment (left, center, right)
+- 📏 Auto-calculated column widths with min/max constraints
+- 🔲 Row separators
+- 📝 Table titles
+- ⚙️ Configurable padding
+- 💡 Simple helper function for quick tables
+- ✨ Similar to Python's rich.console Table
+
+### General
 - 🚀 Compatible with Bun and Deno
 - 💪 TypeScript support
 - ✨ Inspired by Python's rich.console
