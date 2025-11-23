@@ -212,7 +212,7 @@ table.print();
 
 Output:
 ```
-────── User Status ──────
+ ───── User Status ─────
 ╭─────────┬──────────┬───────╮
 │ Name    │  Status  │ Score │
 ├─────────┼──────────┼───────┤
