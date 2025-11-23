@@ -401,16 +401,16 @@ export class Table {
       // Calculate space for horizontal lines on either side of title
       const titleText = ` ${this.options.title} `;
       const titleWidth = stringWidth(titleText);
-      const availableSpace = tableWidth - titleWidth;
+      const availableSpace = tableWidth - titleWidth - 2; // -2 for spaces at start and end
       const leftLineWidth = Math.floor(availableSpace / 2);
       const rightLineWidth = availableSpace - leftLineWidth;
 
-      // Create title line with horizontal borders on either side
+      // Create title line with horizontal borders on either side, with spaces at the edges
       const leftLine = borderColor(borderStyle.horizontal.repeat(leftLineWidth));
       const rightLine = borderColor(borderStyle.horizontal.repeat(rightLineWidth));
       const coloredTitle = titleColor(titleText);
 
-      lines.push(leftLine + coloredTitle + rightLine);
+      lines.push(' ' + leftLine + coloredTitle + rightLine + ' ');
     }
 
     // Top border
