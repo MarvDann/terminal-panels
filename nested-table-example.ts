@@ -21,12 +21,12 @@ Panel({
   padding: 1
 });
 
-// Example 2: Multiple tables with fullWidth in a panel
+// Example 2: Full-width table in a panel
 console.log('\nExample 2: Full-width table in a Panel');
 const table2 = new Table({
   borderStyle: 'rounded',
   borderColor: 'green',
-  fullWidth: false
+  fullWidth: true  // This makes the table expand to fill available width
 });
 table2
   .addColumn('Name')
@@ -68,12 +68,13 @@ Panel({
   padding: 1
 });
 
-// Example 4: Error log table in error panel
-console.log('\nExample 4: Error Log Table');
+// Example 4: Error log table with fullWidth in error panel
+console.log('\nExample 4: Error Log Table with Full Width');
 const errorTable = new Table({
   borderStyle: 'single',
   borderColor: 'red',
-  showRowSeparator: true
+  showRowSeparator: true,
+  fullWidth: true  // Expands to fill the panel width
 });
 errorTable
   .addColumn('Time', { minWidth: 10 })
@@ -90,5 +91,38 @@ Panel({
   padding: 1,
   borderStyle: 'bold'
 });
+
+// Example 5: Comparison of regular vs fullWidth tables
+console.log('\nExample 5: Regular Table vs Full Width Table');
+console.log('\nRegular table (normal width):');
+const regularTable = new Table({
+  title: 'Regular Width',
+  borderStyle: 'single',
+  borderColor: 'blue'
+});
+regularTable
+  .addColumn('ID')
+  .addColumn('Name')
+  .addColumn('Status', { align: 'center' })
+  .addRow('1', 'Alice', 'Active')
+  .addRow('2', 'Bob', 'Active')
+  .addRow('3', 'Charlie', 'Inactive');
+regularTable.print();
+
+console.log('\nFull width table (expands to terminal width):');
+const fullWidthTable = new Table({
+  title: 'Full Width (Expanded)',
+  borderStyle: 'single',
+  borderColor: 'green',
+  fullWidth: true
+});
+fullWidthTable
+  .addColumn('ID')
+  .addColumn('Name')
+  .addColumn('Status', { align: 'center' })
+  .addRow('1', 'Alice', 'Active')
+  .addRow('2', 'Bob', 'Active')
+  .addRow('3', 'Charlie', 'Inactive');
+fullWidthTable.print();
 
 console.log('\n=== End of Examples ===\n');

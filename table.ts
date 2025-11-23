@@ -205,6 +205,22 @@ export class Table {
    */
   private alignText(text: string, width: number, align: ColumnAlign): string {
     const textWidth = stringWidth(text);
+
+    // Truncate text if it's too long
+    if (textWidth > width) {
+      // Truncate and add ellipsis
+      let truncated = text;
+      while (stringWidth(truncated) > width - 1 && truncated.length > 0) {
+        truncated = truncated.slice(0, -1);
+      }
+      truncated = truncated + '…';
+      // Make sure the final result fits
+      while (stringWidth(truncated) > width && truncated.length > 1) {
+        truncated = truncated.slice(0, -2) + '…';
+      }
+      return truncated + ' '.repeat(Math.max(0, width - stringWidth(truncated)));
+    }
+
     if (textWidth >= width) return text;
 
     const padding = width - textWidth;
