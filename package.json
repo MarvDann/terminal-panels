@@ -25,7 +25,8 @@
     "build": "tsc",
     "prepublishOnly": "npm run build",
     "examples": "bun run examples.ts",
-    "examples:table": "bun run table-examples.ts"
+    "examples:table": "bun run table-examples.ts",
+    "examples:nested": "bun run nested-table-example.ts"
   },
   "keywords": [
     "terminal",

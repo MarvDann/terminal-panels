@@ -228,6 +228,30 @@ const table = createTable(
 console.log(table);
 ```
 
+### Nesting Tables in Panels
+
+You can nest tables inside panels for beautiful combined output:
+
+```typescript
+import { Panel } from 'terminal-panels';
+import { Table } from 'terminal-panels/table';
+
+const table = new Table({ borderStyle: 'single', borderColor: 'cyan' });
+table
+  .addColumn('Product')
+  .addColumn('Price', { align: 'right' })
+  .addColumn('Stock', { align: 'center' })
+  .addRow('Widget', '$19.99', { text: '✓', color: 'green' })
+  .addRow('Gadget', '$49.99', { text: '✗', color: 'red' });
+
+Panel({
+  type: 'info',
+  title: 'Product Inventory',
+  messages: [table.render()],
+  padding: 1
+});
+```
+
 ## Table API
 
 ### `Table` Class
@@ -269,9 +293,11 @@ new Table(options?: TableOptions)
   - Default: `1`
 - `showRowSeparator` (boolean, optional): Whether to show separators between rows
   - Default: `false`
-- `expand` (boolean, optional): Expand table to full width
+- `expand` (boolean, optional): Expand table to full terminal width
   - Default: `false`
 - `width` (number, optional): Fixed width for the table
+- `fullWidth` (boolean, optional): Make table take full width of parent container (useful for nesting in panels)
+  - Default: `false`
 
 #### ColumnOptions
 
@@ -313,6 +339,8 @@ See the [table-examples.ts](./table-examples.ts) file for more detailed table ex
 - Color variations (hex, RGB, named)
 - Column width constraints
 
+See the [nested-table-example.ts](./nested-table-example.ts) file for examples of nesting tables within panels.
+
 ## Features
 
 ### Panels
@@ -334,6 +362,8 @@ See the [table-examples.ts](./table-examples.ts) file for more detailed table ex
 - 📝 Table titles
 - ⚙️ Configurable padding
 - 💡 Simple helper function for quick tables
+- 🔗 **Nestable in panels** - Tables can be nested within panels
+- 📐 fullWidth option for parent container adaptation
 - ✨ Similar to Python's rich.console Table
 
 ### General

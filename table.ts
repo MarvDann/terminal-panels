@@ -56,6 +56,8 @@ export interface TableOptions {
   expand?: boolean;
   /** Fixed width for the table */
   width?: number;
+  /** Make table take full width of parent container (useful for nesting in panels) */
+  fullWidth?: boolean;
 }
 
 /**
@@ -254,16 +256,28 @@ export class Table {
       }
     });
 
-    // Handle table width option
-    if (this.options.width || this.options.expand) {
+    // Handle table width options
+    if (this.options.width || this.options.expand || this.options.fullWidth) {
       const padding = this.options.padding || 0;
-      const borderStyle = BORDER_STYLES[this.options.borderStyle || 'single'];
       const separatorWidth = this.columns.length + 1; // vertical borders
       const paddingWidth = (padding * 2) * this.columns.length;
       const currentWidth = widths.reduce((sum, w) => sum + w, 0) + separatorWidth + paddingWidth;
 
-      if (this.options.width && currentWidth < this.options.width) {
-        const extraSpace = this.options.width - currentWidth;
+      let targetWidth = currentWidth;
+
+      if (this.options.width) {
+        targetWidth = this.options.width;
+      } else if (this.options.fullWidth || this.options.expand) {
+        // For fullWidth/expand, use terminal width
+        try {
+          targetWidth = process.stdout.columns || currentWidth;
+        } catch {
+          targetWidth = currentWidth;
+        }
+      }
+
+      if (targetWidth > currentWidth) {
+        const extraSpace = targetWidth - currentWidth;
         const perColumn = Math.floor(extraSpace / this.columns.length);
         const remainder = extraSpace % this.columns.length;
 
@@ -274,6 +288,18 @@ export class Table {
     }
 
     return widths;
+  }
+
+  /**
+   * Calculate the total inner width of the table (excluding left and right borders)
+   */
+  private calculateTotalInnerWidth(columnWidths: number[]): number {
+    const padding = this.options.padding || 0;
+    // Sum of column widths + padding on both sides of each column
+    const columnsWidth = columnWidths.reduce((sum, w) => sum + w + (padding * 2), 0);
+    // Add separators between columns (n-1 separators)
+    const separatorsWidth = this.columns.length - 1;
+    return columnsWidth + separatorsWidth;
   }
 
   /**
@@ -346,11 +372,7 @@ export class Table {
     if (this.options.title) {
       const titleColor = this.getChalkColor(this.options.titleColor);
       const borderColor = this.getChalkColor(this.options.borderColor);
-      const padding = this.options.padding || 0;
-      const totalWidth = columnWidths.reduce((sum, w) => sum + w, 0) +
-                        (this.columns.length + 1) +
-                        (padding * 2 * this.columns.length);
-      const titleWidth = totalWidth - 2;
+      const titleWidth = this.calculateTotalInnerWidth(columnWidths);
       const titleText = this.alignText(this.options.title, titleWidth, 'center');
 
       lines.push(this.renderLine(
