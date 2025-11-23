@@ -391,7 +391,12 @@ export class Table {
     if (this.options.title) {
       const titleColor = this.getChalkColor(this.options.titleColor);
       const borderColor = this.getChalkColor(this.options.borderColor);
-      const tableWidth = this.calculateTotalInnerWidth(columnWidths) + 2; // +2 for left and right borders
+      const padding = this.options.padding || 0;
+
+      // Calculate exact table width by measuring what renderLine produces
+      const tableWidth = columnWidths.reduce((sum, w) => sum + w + (padding * 2), 0) + // content + padding
+                        (this.columns.length - 1) + // separators between columns
+                        2; // left and right borders
 
       // Calculate space for horizontal lines on either side of title
       const titleText = ` ${this.options.title} `;
