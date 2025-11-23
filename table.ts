@@ -387,38 +387,35 @@ export class Table {
     const borderStyle = BORDER_STYLES[this.options.borderStyle || 'single'];
     const columnWidths = this.calculateColumnWidths();
 
-    // Title
+    // Title - rendered above the table with horizontal lines
     if (this.options.title) {
       const titleColor = this.getChalkColor(this.options.titleColor);
       const borderColor = this.getChalkColor(this.options.borderColor);
-      const titleWidth = this.calculateTotalInnerWidth(columnWidths);
-      const titleText = this.alignText(this.options.title, titleWidth, 'center');
+      const tableWidth = this.calculateTotalInnerWidth(columnWidths) + 2; // +2 for left and right borders
 
-      lines.push(this.renderLine(
-        borderStyle.topLeft,
-        borderStyle.topT,
-        borderStyle.topRight,
-        borderStyle.horizontal,
-        columnWidths
-      ));
-      lines.push(borderColor(borderStyle.vertical) + titleColor(titleText) + borderColor(borderStyle.vertical));
-      lines.push(this.renderLine(
-        borderStyle.leftT,
-        borderStyle.cross,
-        borderStyle.rightT,
-        borderStyle.horizontal,
-        columnWidths
-      ));
-    } else {
-      // Top border
-      lines.push(this.renderLine(
-        borderStyle.topLeft,
-        borderStyle.topT,
-        borderStyle.topRight,
-        borderStyle.horizontal,
-        columnWidths
-      ));
+      // Calculate space for horizontal lines on either side of title
+      const titleText = ` ${this.options.title} `;
+      const titleWidth = stringWidth(titleText);
+      const availableSpace = tableWidth - titleWidth;
+      const leftLineWidth = Math.floor(availableSpace / 2);
+      const rightLineWidth = availableSpace - leftLineWidth;
+
+      // Create title line with horizontal borders on either side
+      const leftLine = borderColor(borderStyle.horizontal.repeat(leftLineWidth));
+      const rightLine = borderColor(borderStyle.horizontal.repeat(rightLineWidth));
+      const coloredTitle = titleColor(titleText);
+
+      lines.push(leftLine + coloredTitle + rightLine);
     }
+
+    // Top border
+    lines.push(this.renderLine(
+      borderStyle.topLeft,
+      borderStyle.topT,
+      borderStyle.topRight,
+      borderStyle.horizontal,
+      columnWidths
+    ));
 
     // Header row
     if (this.options.showHeader) {

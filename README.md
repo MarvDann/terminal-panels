@@ -210,6 +210,20 @@ table
 table.print();
 ```
 
+Output:
+```
+────── User Status ──────
+╭─────────┬──────────┬───────╮
+│ Name    │  Status  │ Score │
+├─────────┼──────────┼───────┤
+│ Alice   │  Active  │    95 │
+│ Bob     │ Inactive │    72 │
+│ Charlie │  Active  │    88 │
+╰─────────┴──────────┴───────╯
+```
+
+Note: Table titles are rendered above the table with horizontal lines on either side, creating a clean header that sits outside the table structure.
+
 ### Helper Function
 
 ```typescript
