@@ -12,6 +12,6 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true
   },
-  "include": ["panel.ts"],
-  "exclude": ["node_modules", "dist", "examples.ts"]
+  "include": ["index.ts", "panel.ts", "table.ts"],
+  "exclude": ["node_modules", "dist", "examples.ts", "table-examples.ts", "nested-table-example.ts", "table-width-examples.ts"]
 }

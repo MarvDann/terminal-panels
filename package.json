@@ -1,13 +1,17 @@
 {
   "name": "terminal-panels",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "Beautiful terminal panels and tables with colored borders, inspired by Python's rich.console",
   "type": "module",
-  "main": "./dist/panel.js",
-  "module": "./dist/panel.js",
-  "types": "./dist/panel.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./panel": {
       "import": "./dist/panel.js",
       "types": "./dist/panel.d.ts"
     },
@@ -48,7 +52,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MarvDann/terminal-panels"
+    "url": "git+https://github.com/MarvDann/terminal-panels.git"
   },
   "dependencies": {
     "boxen": "^8.0.1",
